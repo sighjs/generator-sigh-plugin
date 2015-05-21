@@ -6,7 +6,6 @@ module.exports = yeoman.generators.Base.extend({
   prompting: function () {
     var done = this.async()
 
-    // Have Yeoman greet the user.
     this.log(chalk.red('sigh plugin') + ' generator')
 
     var prompts = [
@@ -32,11 +31,19 @@ module.exports = yeoman.generators.Base.extend({
       },
       {
         type: 'checkbox',
+        name: 'options',
+        message: 'Please describe how your plugin will work:',
+        choices: [
+          { value: 'oneToOne', name: 'Maps input files to output files 1:1', checked: false },
+        ]
+      },
+      {
+        type: 'checkbox',
         name: 'features',
         message: 'Which features would you like to use?',
         choices: [
-          { value: 'oneToOne', name: 'One to one mapping', checked: false },
-          { value: 'circleCi', name: 'CircleCI integration', checked: true },
+          { value: 'circleCi', name: 'CircleCI integration', checked: false },
+          { value: 'travisCi', name: 'TravisCI integration', checked: false },
         ]
       }
     ]
@@ -81,13 +88,15 @@ module.exports = yeoman.generators.Base.extend({
 
       var deps = hashArray(this.props.dependencies)
       var features = hashArray(this.props.features)
+      var options = hashArray(this.props.options)
 
       var optionMap = {
         author: this.props.author,
         oneToOne: this.props.oneToOne,
         ghUsername: this.props.ghUsername,
         deps: deps,
-        features: features
+        features: features,
+        options: options
       }
 
       this.fs.copy(this.templatePath('.gitignore'), this.destinationPath('.gitignore'))
@@ -95,6 +104,9 @@ module.exports = yeoman.generators.Base.extend({
 
       if (features.circleCi)
         this.fs.copy(this.templatePath('circle.yml'), this.destinationPath('circle.yml'))
+
+      if (features.travisCi)
+        this.fs.copy(this.templatePath('_travis.yml'), this.destinationPath('.travis.yml'))
 
       var copy = function(file) {
         this.fs.copyTpl(this.templatePath(file), this.destinationPath(file), optionMap)
@@ -109,6 +121,7 @@ module.exports = yeoman.generators.Base.extend({
   },
 
   install: function () {
+    // return
     this.npmInstall(this.props.dependencies, { save: true })
 
     var devDeps = [
