@@ -1,4 +1,4 @@
-# sigh-plugin
+# sigh-<%= pluginName %>
 
 [![build status](https://circleci.com/gh/<%= ghUsername %>/sigh-<%= pluginName %>.png)](https://circleci.com/gh/<%= ghUsername %>/sigh-<%= pluginName %>)
 
