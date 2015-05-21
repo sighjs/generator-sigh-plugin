@@ -1,6 +1,7 @@
 'use strict';
 var yeoman = require('yeoman-generator')
 var chalk = require('chalk')
+var camelize = require('camelize')
 
 module.exports = yeoman.generators.Base.extend({
   prompting: function () {
@@ -11,8 +12,14 @@ module.exports = yeoman.generators.Base.extend({
     var prompts = [
       {
         type: 'input',
+        name: 'pluginName',
+        message: 'What is the name of this plugin?',
+        default: this.appname.replace(/^sigh /, ''),
+      },
+      {
+        type: 'input',
         name: 'ghUsername',
-        message: 'What\'s your github username?',
+        message: 'Which github username/organisation should own this plugin?',
         store: true,
         default: 'unknown-user'
       },
@@ -20,19 +27,13 @@ module.exports = yeoman.generators.Base.extend({
         type: 'input',
         name: 'author',
         message: 'What\'s your github author?',
-        default: 'Unknown <invalid@email.com>',
+        default: 'Anonymous <not.a.real@email.com>',
         store: true
-      },
-      {
-        type: 'input',
-        name: 'name',
-        message: 'What\'s the name of your sigh plugin (should begin with "sigh ")?',
-        default: this.appname,
       },
       {
         type: 'checkbox',
         name: 'options',
-        message: 'Please describe how your plugin will work:',
+        message: 'Which of the following apply to your plugin?',
         choices: [
           { value: 'oneToOne', name: 'Maps input files to output files 1:1', checked: false },
         ]
@@ -44,7 +45,8 @@ module.exports = yeoman.generators.Base.extend({
         choices: [
           { value: 'circleCi', name: 'CircleCI integration', checked: false },
           { value: 'travisCi', name: 'TravisCI integration', checked: false },
-        ]
+        ],
+        store: true
       }
     ]
 
@@ -58,7 +60,7 @@ module.exports = yeoman.generators.Base.extend({
 
       // sigh-core option is forced on when one-to-one mapping so don't bother
       // offering the choice
-      if (props.features.indexOf('oneToOne') === -1)
+      if (props.options.indexOf('oneToOne') === -1)
         depChoices.push({ value: 'sigh-core', checked: true })
 
       this.prompt([{
@@ -69,7 +71,7 @@ module.exports = yeoman.generators.Base.extend({
       }], function(depProps) {
         props.dependencies = depProps.dependencies
 
-        if (props.features.indexOf('oneToOne') !== -1)
+        if (props.options.indexOf('oneToOne') !== -1)
           props.dependencies.push('sigh-core')
 
         done()
@@ -90,13 +92,17 @@ module.exports = yeoman.generators.Base.extend({
       var features = hashArray(this.props.features)
       var options = hashArray(this.props.options)
 
+      var pluginName = this.props.pluginName.replace(/ /g, '-')
+
       var optionMap = {
         author: this.props.author,
         oneToOne: this.props.oneToOne,
         ghUsername: this.props.ghUsername,
+        pluginName: pluginName,
+        pluginNameCamelized: camelize(pluginName),
         deps: deps,
         features: features,
-        options: options
+        options: options,
       }
 
       this.fs.copy(this.templatePath('.gitignore'), this.destinationPath('.gitignore'))

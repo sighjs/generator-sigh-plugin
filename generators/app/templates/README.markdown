@@ -1,12 +1,12 @@
 # sigh-plugin
 
-[![build status](https://circleci.com/gh/<%= ghUsername %>/sigh-plugin.png)](https://circleci.com/gh/<%= ghUsername %>/sigh-plugin)
+[![build status](https://circleci.com/gh/<%= ghUsername %>/sigh-<%= pluginName %>.png)](https://circleci.com/gh/<%= ghUsername %>/sigh-<%= pluginName %>)
 
 Sigh plugin for...
 
 ## Example
 
-`npm install --save-dev sigh-plugin` then add something like this to your `sigh.js`:
+`npm install --save-dev sigh-<%= pluginName %>` then add something like this to your `sigh.js`:
 ```javascript
 // TODO: example goes here
 ```

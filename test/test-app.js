@@ -4,11 +4,16 @@ var path = require('path')
 var assert = require('yeoman-generator').assert
 var helpers = require('yeoman-generator').test
 
-describe('sigh template:app', function () {
+describe('sigh plugin:app', function () {
   before(function (done) {
     helpers.run(path.join(__dirname, '../generators/app'))
       .withOptions({ skipInstall: true })
-      .withPrompts({ dependencies: [ 'bluebird' ], features: [ 'circleCi' ] })
+      .withPrompts({
+        dependencies: [ 'bluebird' ],
+        features: [ 'circleCi' ],
+        options: [ 'oneToOne' ],
+        pluginName: 'test'
+      })
       .on('end', done)
   })
 
