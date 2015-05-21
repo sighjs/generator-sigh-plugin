@@ -105,8 +105,8 @@ module.exports = yeoman.generators.Base.extend({
         options: options,
       }
 
-      this.fs.copy(this.templatePath('.gitignore'), this.destinationPath('.gitignore'))
-      this.fs.copy(this.templatePath('.npmignore'), this.destinationPath('.npmignore'))
+      this.fs.copy(this.templatePath('_gitignore'), this.destinationPath('.gitignore'))
+      this.fs.copy(this.templatePath('_npmignore'), this.destinationPath('.npmignore'))
 
       if (features.circleCi)
         this.fs.copy(this.templatePath('circle.yml'), this.destinationPath('circle.yml'))
