@@ -1,0 +1,24 @@
+{
+  "name": "sigh-template",
+  "version": "0.0.1",
+  "description": "sigh plugin, the author forgot to add their own description.",
+  "scripts": {
+    "test": "sigh"
+  },
+  "main": "lib/index",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/<%= ghUsername %>/sigh-template.git"
+  },
+  "keywords": [
+    "build",
+    "assets",
+    "pipeline",
+    "sigh-plugin"
+  ],
+  "author": "<%= author %>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/<%= ghUsername %>/sigh-template/issues"
+  }
+}
