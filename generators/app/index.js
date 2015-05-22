@@ -36,6 +36,7 @@ module.exports = yeoman.generators.Base.extend({
         message: 'Which of the following apply to your plugin?',
         choices: [
           { value: 'oneToOne', name: 'Maps input files to output files 1:1', checked: false },
+          { value: 'multiCpu', name: 'Spreads work over multiple CPUs', checked: false },
         ]
       },
       {
@@ -55,13 +56,14 @@ module.exports = yeoman.generators.Base.extend({
 
       var depChoices = [
         { value: 'bluebird', checked: true },
-        { value: 'lodash', checked: true },
       ]
 
-      // sigh-core option is forced on when one-to-one mapping so don't bother
-      // offering the choice
+      // next two options can be forced "on" depending on options
       if (props.options.indexOf('oneToOne') === -1)
         depChoices.push({ value: 'sigh-core', checked: true })
+
+      if (props.options.indexOf('multiCpu') === -1)
+        depChoices.push({ value: 'lodash', checked: true })
 
       this.prompt([{
         type: 'checkbox',
@@ -73,6 +75,9 @@ module.exports = yeoman.generators.Base.extend({
 
         if (props.options.indexOf('oneToOne') !== -1)
           props.dependencies.push('sigh-core')
+
+        if (props.options.indexOf('multiCpu') !== -1)
+          props.dependencies.push('lodash')
 
         done()
       })
@@ -142,6 +147,9 @@ module.exports = yeoman.generators.Base.extend({
     ]
     if (this.props.dependencies.indexOf('sigh-core') === -1)
       devDeps.push('sigh-core')
+
+    if (this.props.options.indexOf('multiCpu') !== -1)
+      devDeps.push('process-pool')
 
     this.npmInstall(devDeps, { saveDev: true })
   }
