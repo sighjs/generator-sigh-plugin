@@ -2,8 +2,11 @@
 <% } if (deps.bluebird) { %>import Promise from 'bluebird'
 <% } if (deps['sigh-core']) { %>import { Bacon } from 'sigh-core'
 <% } if (options.oneToOne) { %>import { mapEvents } from 'sigh-core/lib/stream'
-<% } if (options.multiCpu) { if (options.oneToOne) { %>
-function <%= pluginNameCamelized %>Task(opts) {
+<% } if (options.multiCpu) { %>
+function <%= pluginNameCamelized %>Task(opts) {<% if (! options.oneToOne) { %>
+  // TODO: write the pooled task
+}
+<% } else { %>
   // this function is called once for each subprocess in order to cache state,
   // it is not a closure and does not have access to the surrounding state, use
   // `require` to include any modules you need, for further info see
