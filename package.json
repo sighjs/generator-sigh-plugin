@@ -1,6 +1,6 @@
 {
   "name": "generator-sigh-plugin",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "Yeoman generator for sigh plugins",
   "license": "MIT",
   "main": "app/index.js",

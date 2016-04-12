@@ -136,7 +136,6 @@ module.exports = yeoman.generators.Base.extend({
     this.npmInstall(this.props.dependencies, { save: true })
 
     var devDeps = [
-      'babel',
       'chai',
       'mocha',
       'sigh',
