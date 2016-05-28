@@ -1,4 +1,4 @@
-var glob, babel, write, pipeline, debounce, mocha
+var glob, babel, write, pipeline, merge, mocha
 
 module.exports = function(pipelines) {
   var babelOpts = {
@@ -26,7 +26,6 @@ module.exports = function(pipelines) {
       pipeline('test:js'),
       { collectInitial: true }
     ),
-    debounce(700),
     pipeline({ activate: true }, 'mocha')
   ]
 
