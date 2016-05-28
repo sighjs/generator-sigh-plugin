@@ -143,6 +143,11 @@ module.exports = yeoman.generators.Base.extend({
       'sigh-cli',
       'sigh-mocha',
       'source-map-support',
+      'babel-core',
+      'babel-plugin-transform-es2015-modules-commonjs',
+      'babel-preset-es2015',
+      'babel-preset-es2015-loose',
+      'babel-preset-stage-1',
     ]
     if (this.props.dependencies.indexOf('sigh-core') === -1)
       devDeps.push('sigh-core')
