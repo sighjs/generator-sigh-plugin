@@ -22,9 +22,9 @@ module.exports = function(pipelines) {
 
   pipelines['tests:run'] = [
     merge(
+      { collectInitial: true },
       pipeline('source:js'),
-      pipeline('test:js'),
-      { collectInitial: true }
+      pipeline('test:js')
     ),
     pipeline({ activate: true }, 'mocha')
   ]

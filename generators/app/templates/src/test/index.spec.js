@@ -2,7 +2,7 @@
 <% } if (deps.bluebird) { %>import Promise from 'bluebird'
 <% } if (options.multiCpu) { %>import ProcessPool from 'process-pool'
 <% } %>import { Bacon } from 'sigh-core'
-import Event from 'sigh/lib/Event'
+import Event from 'sigh-core'
 
 import <%= pluginNameCamelized %> from '../'
 
